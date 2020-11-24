@@ -1,0 +1,282 @@
+{%load static%}
+
+<section class="container-fluid px-0">
+  <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
+    <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
+      <div class="g-pa-20">
+        <h1 class="g-font-weight-300 g-font-size-28 g-color-black g-mb-30">Messagerie  
+          <i class="hs-admin-comment-alt g-color-secondary g-px-10" id='btn-reload_chat'></i>
+        </h1>
+        <div class="card">
+          <div class="row no-gutters">
+            <div class="col-lg-5 w-100 g-brd-right--lg g-brd-gray-light-v7">
+              <header class="g-brd-bottom g-brd-gray-light-v4 g-px-10 g-px-20--lg">
+                <!-- Chat Search -->
+                <br>
+                <div class="input-group g-pos-rel g-height-50 g-height-50--lg" id='div-option_contact'>
+                  <select class="col-9 h-100 custom-select rounded-0 g-brd-none g-color-black g-px-6 g-py-3" id='selectContact'>
+                    <option value='temp' id='optionContact-temp' selected disabled> Selectionner un contact ...  </option> 
+                    {% for c in contacts %}
+                    <option value="{{c.user.first_name}}" id='optionContact-{{c.id}}' class='optionContact-Class'>
+                      {{c.user.first_name}} - {{c.user.username}} ( {{c.description}} )
+                    </option>   
+                    {% endfor %}
+                  </select>
+                  <button class="col-3 btn rounded-0 u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-22 g-z-index-2 g-color-primary" >
+                    <i class="hs-admin-comment-alt" id='btn-new_chat'></i>
+                  </button>            
+                </div>
+                <div class="input-group g-pos-rel g-height-50 g-height-50--lg">
+                  <input class="form-control h-100 form-control-md g-brd-none p-0 g-px-6 g-pr-40" id='contact-search' type="text" placeholder="Rechercher un contact...">
+                  <span class="col-3 btn rounded-0 u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-22 g-z-index-2 g-color-primary">
+                    <i class="hs-admin-search"></i>
+                  </span>
+                </div>
+                <!-- End Chat Search -->
+              </header>
+
+              <div class="js-custom-scroll-horizontal js-custom-scroll g-height-59_5vh--lg">
+                <!-- Chat List -->
+                <div class="d-flex d-lg-block g-brd-bottom g-brd-none--lg g-brd-gray-light-v4 g-overflow-x-auto">
+
+                 
+                  <!-- Chat List Item -->
+                  {% for c in chats %}
+                    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg chat-Class" id='chatID-{{c.id}}'>
+                      <span id='chatLastMsg-{{c.id}}' style='display:none' >{{c.last_message.id}}</span>
+                      <!-- Chat List Item: Avatar -->
+                      <div class="d-flex g-mr-20--lg">
+                        <span class="d-inline-block g-pos-rel">
+                        <span class="u-badge-v2--md u-badge--bottom-right g-bg-secondary g-mb-8 g-mr-8"></span>
+
+                        <div class="rounded-circle g-pos-rel g-width-45 g-width-55--lg g-height-45 g-height-55--lg g-bg-gray-light-v7">
+                          <span class="text-uppercase g-absolute-centered g-font-weight-600 g-font-size-16 g-font-size-18--lg g-color-white"> 
+                            {% if c.user_to.user.username != username %}
+                              {{c.user_to.user.first_name.0}}{{c.user_to.user.first_name.1}}
+                            {% else %}
+                              {{c.user_from.user.first_name.0}}{{c.user_from.user.first_name.1}}
+                            {% endif %}
+                          </span>
+                        </div>
+                        </span>
+                      </div>
+                      <!-- End Chat List Item: Avatar -->
+
+                      <div class="media-body align-self-center g-hidden-md-down">
+                        <div class="media g-mb-10">
+                          <!-- Chat List Item: Name -->
+                          <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">
+                            {% if c.user_to.user.username != username %}
+                              {{c.user_to.user.first_name}} ({{c.user_to.description}})
+                            {% else %}
+                              {{c.user_from.user.first_name}} ({{c.user_from.description}})
+                            {% endif %}
+                          </h3>
+                          <!-- End Chat List Item: Name -->
+
+                          <!-- Chat List Item: Time -->
+                          <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+                          <i class="hs-admin-time icon-clock g-mr-5"></i>
+                          <small id='chatTimestamp-{{c.id}}'>{{c.last_message.timestamp | date:"d.m.Y, H:i"}}</small>
+                        </em>
+                          <!-- End Chat List Item: Time -->
+                        </div>
+
+                        <div class="media">
+                          <p class="media-body mb-0 chatLastMsg-class" id='contentLastMsg-{{c.id}}'>{{c.last_message.content}}</p>
+
+                          <!-- Chat List Item: Unread Messages -->
+                          <span id='notifBadge-{{c.id}}' style='display:none' class="d-flex align-self-center justify-content-center g-min-width-35 g-bg-secondary g-font-size-12 g-color-white g-rounded-15 g-px-8 ml-auto"></span>
+                          <!-- End Chat List Item: Unread Messages -->
+                        </div>
+                      </div>
+                    </section>
+                  {% endfor %}
+                  <!-- End Chat List Item -->
+
+                  
+                </div>
+                <!-- End Chat List -->
+              </div>
+            </div>
+
+            <div class="col-lg-7 g-pos-rel g-min-height-500 g-min-height-200--lg g-pa-15" id='messages-div'>
+                <!-- Chat. Emty Message Area. -->
+                <div class="g-absolute-centered text-center">
+                  <div class="g-pos-rel g-width-80 g-width-130--lg g-height-80 g-height-130--lg g-bg-gray-light-v8 rounded-circle mx-auto g-mb-20">
+                    <i class="hs-admin-comments g-absolute-centered g-font-size-24 g-font-size-32--lg g-color-gray-light-v1"></i>
+                  </div>
+
+                  <h5 class="g-font-size-default g-font-size-16--md g-font-weight-300 g-color-black mb-0">Debuter une conversation .. </h5>
+                </div>
+                <!-- End Chat. Emty Message Area. -->
+            </div>
+            
+            <!-- End Chat. Message Area. -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'chat/rotate-modal.html'%}
+
+<button class="btn" id='btn-rotate_screen' data-target='#rotate-modal' data-toggle='modal'>
+  <i class="hs-admin-comment-alt"></i>
+</button>
+
+<!-- JS Global Compulsory -->
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-migrate/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'root/assets/vendor/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'root/assets/vendor/cookiejs/jquery.cookie.js' %}"></script>
+
+<!-- JS Plugins Init. -->
+<script src="{% static 'root/assets/vendor/appear.js' %}"></script>
+<script src="{% static 'root/assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+<!-- JS Unify -->
+<script src="{% static 'root/assets/js/hs.core.js' %}"></script>
+<!--<script src="{% static 'root/assets/js/components/hs.dropdown.js' %}"></script>-->
+<script src="{% static 'root/assets/js/components/hs.scrollbar.js' %}"></script>
+
+<!--
+<script src="{% static 'root/assets/js/helpers/hs.hamburgers.js' %}"></script>
+<script src="{% static 'assets/js/components/hs.side-nav.js' %}"></script>
+<script src="{% static 'assets/js/components/hs.bar-chart.js' %}"></script>
+-->
+
+
+<script>
+$("#main-div").css('display','none');
+  $(document).on('ready', function () {
+    // initialization of custom scrollbar
+    $.HSCore.components.HSScrollBar.init($('.js-custom-scroll'));
+    $.HSCore.components.HSScrollBar.init($('.js-custom-scroll-horizontal'), {axis: 'x'});
+    $("#main-div").css('display','block');
+    
+    // initialization of HSDropdown component
+    //$.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {dropdownHideOnScroll: false});
+    //$.HSCore.components.HSBarChart.init('.js-bar-chart');
+    
+
+    /*
+    // initialization of hamburger
+    $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+    // initialization of custom select
+    $('.js-select').selectpicker();
+
+    // initialization of charts
+    
+    */
+  });
+
+  window.mobileCheck = function() {
+    let check = false;
+    (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+    return check;
+  };
+  
+  var is_mobile = false
+  //if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+  // true for mobile device
+  if(window.mobileCheck){
+    console.log("mobile device ");
+    if (screen.orientation.type.match(/\w+/)[0] !== 'landscape'){
+      console.log('first show the gif ...');
+      //$('#btn-rotate_screen').click()
+      $('#rotate-modal').modal('show');
+    }
+    is_mobile = true
+  }else{
+    // false for not mobile device
+    console.log("not mobile device");
+  }
+
+  /*
+  $("#rotate-modal").on("hidden.bs.modal", function(){
+    $(".modal-backdrop").remove(); 
+  })*/
+
+  screen.orientation.onchange = function (){
+    // logs 'portrait' or 'landscape'
+    if (screen.orientation.type.match(/\w+/)[0] !== 'landscape' && is_mobile){
+      console.log('show the gif ...');
+      $('#rotate-modal').modal('show');
+    }else if(screen.orientation.type.match(/\w+/)[0] === 'landscape' && is_mobile){
+      //$('#rotate-dismiss').click()
+      $('#rotate-modal').modal('hide');
+    }
+  }
+</script>
+
+{% if add_chat %}
+  <script>
+    $('.chat-Class').removeClass('active')
+    GplFwk.ajax.getAjax('show_chat/'+{{add_chat}},"messages-div","GET")
+    $(this).addClass('active')
+  </script>
+{% endif %}
+
+<script>
+    var id_chat
+    $('.chat-Class').each(function(){
+        $(this).click(function(){
+          //$('#reset-add').click()
+          id_chat = $(this).attr('id').split('-')[1]
+          $('.chat-Class').removeClass('active')
+          GplFwk.ajax.getAjax('show_chat/'+id_chat,"messages-div","GET")
+          $(this).addClass('active')
+        })
+    })
+
+    var contact_id
+    $('#contact-search').keyup(function(){
+      $('.optionContact-Class').css('display','block') 
+      $('#optionContact-temp').prop('selected',true)
+      if ($(this).val() !== ''){
+        text_search = $(this).val().trim()
+        $('.optionContact-Class').each(function(){
+          contact_id = $(this).attr('id').split('-')[1]
+          if( !$(this).attr('value').includes(text_search) ){
+            $('#optionContact-'+contact_id).css('display','none') 
+          }
+        })
+      }
+      contact_id = ''
+      /*
+      $.get("get_contact_ajax/"+text_search,function(data){
+        $('#option_contact').html('')
+        console.log(data)
+        if (data.length !== 0){
+          html ="<option value='temp' id='optionContact-temp' selected disabled> Selectionner un contact ...  </option> "
+          for(var i=0; i<data.length ; i++){
+            html= html + `<option value="${data[i]['profil']['id']}" class='optionContact-Class' id='optionContact-${data[i]['profil']['id']}'>
+              ${data[i]['user']['first_name']} - ${data[i]['user']['username']} ( ${data[i]['profil']['description']} )
+            </option>`
+          }
+          $('#option_contact').html(html)
+          $('#div-option_contact').css('display','block')
+        }else{
+          $('#div-option_contact').css('display','none')
+        }
+      }).done(function() { 
+        console.log(" succes ! ") 
+          
+      }).fail(function() { 
+        console.log(" echec ! ")   
+      })*/
+    })
+
+    $("#btn-new_chat").on("click", function(){
+        new_contactId = $('#selectContact option:selected').attr('id').split('-')[1]
+        if(new_contactId !=='temp'){
+          GplFwk.ajax.getAjax('add_chat/'+new_contactId,"main-div","GET")
+          new_contactId = ''
+        }else{
+          alert("Aucun contact n'est choisi ... ")
+        }
+      })
+</script>

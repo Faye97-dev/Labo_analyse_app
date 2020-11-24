@@ -1,0 +1,98 @@
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title text-uppercase g-font-size-default g-color-black g-mb-8" id="exampleModalLabel">Ajout d'une nouvelle analyse</span>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id='form_add-analyse'>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Nom du patient</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="text" name='name_nom' id="nom-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">NNI</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="text" name='name_nni' id="nni-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Numero</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="number" name='name_tel' id="tel-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Adresse</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="text" name='name_adresse' id="adresse-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Email</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="email" name='name_email' id="email-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Age</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="number" name='name_age' id="age-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Poids</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="number" name='name_poids' id="poids-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Taille</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="number" name='name_taille' id="taille-analyse">
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-text-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Group Sanguin</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                        
+                            <select class="custom-select rounded-0 g-brd-gray-light-v7 g-brd-secondary--focus g-px-6 g-py-5" id='option_grpSanguin'>
+                                <option value="" disabled selected></option>
+                                {% for s in grpSanguins %}
+                                    <option value="{{s.id}}">{{s.nom}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-text-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Medecin</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <select class="custom-select rounded-0 g-brd-gray-light-v7 g-brd-secondary--focus g-px-6 g-py-5" id='option_medecin'>
+                                <option value="" disabled selected></option>
+                                {% for m in medecins %}
+                                <option value="{{m.id}}">{{m.nom}} - {{m.specialite}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row g-mb-25">
+                        <label for="example-tel-input" class="col-sm-5 col-md-4 col-lg-3 col-xl-2 col-form-label">Date</label>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-10">
+                            <input class="form-control form-control-md g-color-gray-dark-v12 g-brd-gray-light-v2 g-brd-secondary--focus g-rounded-4 g-px-6 g-py-5" type="date" name='name_date' id="date-analyse">
+                        </div>
+                    </div>
+                    <input type="reset" id="reset-add" value="Reset" style="display:none">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn u-btn-primary" id='add-dismiss' type="button" data-dismiss="modal">Annuler</button>
+                <button class="btn u-btn-secondary" id='add-submit'>Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>

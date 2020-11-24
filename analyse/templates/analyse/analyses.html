@@ -1,0 +1,299 @@
+{% load static %}
+{% csrf_token %}
+
+<style>
+    .modal-backdrop{
+        opacity:0.5 !important;
+    }
+</style>
+<div class="g-bg-lightblue-v10-opacity-0_5 g-pa-20">
+    <div class="row">
+        {% if role == 'Admin' %}
+        <div class="col-sm-6 col-lg-6 col-xl-4 g-mb-30">
+            <button class="btn btn-md btn-xl--md u-btn-secondary g-width-125--md g-font-size-12 g-font-size-default--md g-mb-10" data-target='#add-modal' data-toggle='modal'> Nouveau </button>
+            <button class="btn btn-md btn-xl--md u-btn-primary g-width-125--md g-font-size-12 g-font-size-default--md g-mb-10" data-target='#existant-modal' data-toggle='modal' id='bigbtn-existant'> Existant </button>        
+        </div>
+        {% endif %}
+        
+        <div class="col-xl-12">
+            <!-- Income Cards -->
+            <div class="card g-brd-gray-light-v7 u-card-v1 g-mb-30">
+                <header class="media g-pa-15 g-pa-25-30-0--md g-mb-20">
+                    <div class="media-body align-self-center">
+                        <h3 class="g-line-height-1 g-font-weight-300 g-font-size-28 g-color-secondary">Listes des analyses <i class="fas fa-stethoscope"></i></h3>   
+                    </div>
+                    <!--
+                    <div class="col-5 g-py-10">
+                        <input class="form-control h-100 form-control-md g-brd-none p-0 g-px-6 g-pr-40" id='analyse-search' type="text" placeholder="Rechercher par ...">
+                        <span class="col-3 btn rounded-0 u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-22 g-z-index-2 g-color-primary">
+                            <i class="hs-admin-search"></i>
+                        </span>
+                    </div>
+                    -->
+                </header>
+
+                <div class="js-custom-scroll g-height-500 g-pa-15 g-pa-0-30-25--md">
+                    <table class="table table-responsive-sm w-100" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Nom du Patient</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Numero du Patient</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Nom du medecin</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Email du medecin</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Date de l'analyse</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Analyse PDF</th>
+                            {% if role == 'Admin' %}<th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Actions</th>{% endif %}
+
+                            <th style="display:none"></th>
+                            <th style="display:none"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for a in analyses %}
+                        <tr class='analyse_line-Class' id='analyse_line-{{a.id}}' data={{a.patient.nom}}>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.patient.nom}}
+                            </td>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.patient.tel}}
+                            </td>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.medecin.nom}}
+                            </td>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.medecin.email}}
+                            </td>
+                            <td id='date_analyse-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.date_analyse}}
+                            </td>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {% if a.analyse_pdf %}
+                                <a href='/media/{{a.analyse_pdf}}' class="hs-admin-file g-font-size-20 g-ml-15" target='blank'></a>
+                                {% endif %}
+                            </td> 
+                            {% if role == 'Admin' %}
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                <a class="hs-admin-upload u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-secondary--hover g-ml-5 pdf-upload" href="#" id='upload-{{a.id}}' data-target='#upload-modal' data-toggle='modal'></a>
+                                <a class="hs-admin-pencil u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-secondary--hover g-ml-5 edit-analyse" href="#" id='edit-{{a.id}}' data-target='#existant-modal' data-toggle='modal'></a>
+                                <a class="hs-admin-trash u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-primary--hover g-ml-5 delete-analyse" href="#" id='delete-{{a.id}}' data-target='#delete-modal' data-toggle='modal'></a>
+                            </td>
+                            {% endif %}
+                            <td id='medecin-{{a.id}}' style="display:none">{{a.medecin.id}}</td>
+                            <td id='patient-{{a.id}}' style="display:none">{{a.patient.id}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- End Income Cards -->
+        </div>
+    </div>  
+</div>
+
+
+
+{% include 'analyse/add_analyse-modal.html' %}
+{% include 'analyse/existant_analyse-modal.html' %}
+{% include 'analyse/upload_analyse-modal.html' %}
+{% include 'analyse/delete_analyse-modal.html' %}
+
+<script src="{% static 'root/assets/js/components/hs.scrollbar.js' %}"></script>
+
+<script>
+    $.HSCore.components.HSScrollBar.init($('.js-custom-scroll'));
+/* var search_id
+    $('#analyse-search').keyup(function(){
+      $('.analyse_line-Class').css('display','block') 
+      if ($(this).val() !== ''){
+        text_search = $(this).val().trim()
+        $('.analyse_line-Class').each(function(){
+          search_id = $(this).attr('id').split('-')[1]
+          if( !$(this).attr('data').includes(text_search) ){
+            $('#analyse_line-'+search_id).css('display','none') 
+          }
+        })
+        
+      }
+      search_id = ''
+    })*/
+</script>
+
+<script>
+    var id_analyse
+    $('.edit-analyse').each(function(){
+        $(this).click(function(){
+            $('#reset-existant').click()
+            id_analyse = $(this).attr('id').split('-')[1]
+            //console.log(id_analyse)
+            
+            id_medecin = $('#medecin-'+id_analyse).text().trim()
+            id_patient = $('#patient-'+id_analyse).text().trim()
+            $('#optionMedecin-'+id_medecin).prop('selected',true)
+            $('#optionPatient-'+id_patient).prop('selected',true)
+            
+            date_analyse = new Date($("#date_analyse-"+id_analyse).text().trim());
+            day = ("0" + date_analyse.getDate()).slice(-2);
+            month = ("0" + (date_analyse.getMonth() + 1)).slice(-2);
+            date_analyse = date_analyse.getFullYear()+"-"+(month)+"-"+(day);
+            $('#dateAnalyse'+'-existant').attr('value',date_analyse)
+            
+            //console.log(date_analyse)
+            $("#edit-submit").css('display','block')
+            $("#title_modal-edit").css('display','block')
+            $("#existant-submit").css('display','none')
+            $("#title_modal-existant").css('display','none')
+        })
+    })
+
+    var data_edit;
+    var isSubmited_edit = false;
+    $("#edit-submit").on("click", function(){
+        form = $("#form_existant-analyse").serializeArray()
+        //console.log(form)
+        data_edit =transformFormDatafunction(form)
+        
+        // select options
+        data_edit['patient_id']=$('#option_patient-existant option:selected').val()
+        data_edit['medecin_id']=$('#option_medecin-existant option:selected').val()
+        data_edit['analyse_id']= id_analyse
+        if(data_edit['patient_id']!=="" && data_edit['medecin_id']!=="" && data_edit['name_date']!==""){
+            console.log(data_edit)
+            isSubmited_edit = true
+            $("#existant-dismiss").click()
+        }else{
+            alert('Des champs non renseignes !!')
+        }    
+    })
+
+    // delete script
+    $('.delete-analyse').each(function(){
+        $(this).click(function(){
+            id_analyse = $(this).attr('id').split('-')[1]
+        })
+    })
+    
+    var isSubmited_delete = false
+    $("#delete-submit").on("click", function(){
+        isSubmited_delete = true
+        $("#delete-dismiss").click()
+    })
+
+    $("#delete-modal").on("hidden.bs.modal", function(){
+        $(".modal-backdrop").remove(); 
+        if(isSubmited_delete){
+            GplFwk.ajax.getAjax('delete_analyse/'+id_analyse,"main-div","GET")
+            isSubmited_delete = false
+        }
+    })
+
+</script>
+
+<script>
+    // initialization of custom scrollbar
+    //$.HSCore.components.HSScrollBar.init($('.js-custom-scroll'));
+    // initialization of HSDropdown component
+    //$.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {dropdownHideOnScroll: false});
+    var transformFormDatafunction = function (a) {
+        var data = {}
+
+        for (var i = 0; i < a.length; i++) {          
+            data[a[i].name] = a[i].value
+        }
+        
+        return data;
+    }
+
+    var data_add;
+    var isSubmited_add = false;
+    //var form_can_add = false;
+    //var form_is_ok = true;
+    $("#add-submit").on("click", function(){
+        //$('#'+position_id).prop('selected',false);
+        form = $("#form_add-analyse").serializeArray()
+        data_add =transformFormDatafunction(form)
+        //console.log(form)
+        // select options
+        data_add['grpSanguin_id']=$('#option_grpSanguin option:selected').val()
+        data_add['medecin_id']=$('#option_medecin option:selected').val()
+        
+        if(data_add['grpSanguin_id']!=="" && data_add['medecin_id']!=="" && data_add['name_date']!=="" && data_add['name_nni']!== "" && data_add['name_nom']!=="" && data_add['name_tel']!=="" ){
+            console.log(data_add)
+            isSubmited_add = true
+            $("#add-dismiss").click()
+        }else{
+            alert('Des champs non renseignes !!')
+        }
+        
+    })
+
+    $("#add-modal").on("hidden.bs.modal", function(){
+        $(".modal-backdrop").remove(); 
+        if(isSubmited_add){
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('add_analyse',"main-div","POST",'data=' + JSON.stringify(data_add), csrftoken)
+            data_add={}
+            isSubmited_add = false
+        }
+        $('#reset-add').click()
+    })
+
+    //
+    var data_existant;
+    var isSubmited_existant = false;
+    $("#existant-submit").on("click", function(){
+        //$('#'+position_id).prop('selected',false);
+        form = $("#form_existant-analyse").serializeArray()
+        //console.log(form)
+        data_existant =transformFormDatafunction(form)
+        
+        // select options
+        data_existant['patient_id']=$('#option_patient-existant option:selected').val()
+        data_existant['medecin_id']=$('#option_medecin-existant option:selected').val()
+        if(data_existant['patient_id']!=="" && data_existant['medecin_id']!=="" && data_existant['name_date']!=="" ){
+            console.log(data_existant)
+            isSubmited_existant = true
+            $("#existant-dismiss").click()
+        }else{
+            alert('Des champs non renseignes !!')
+        }
+        
+    })
+
+    $("#existant-modal").on("hidden.bs.modal", function(){
+        $(".modal-backdrop").remove(); 
+        if(isSubmited_existant){
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('existant_analyse',"main-div","POST",'data=' + JSON.stringify(data_existant), csrftoken)
+            data_existant={}
+            isSubmited_existant = false
+        }else if(isSubmited_edit){
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('edit_analyse',"main-div","POST",'data=' + JSON.stringify(data_edit), csrftoken)
+            data_edit={}
+            isSubmited_edit = false
+        }
+        
+    })
+
+    $("#bigbtn-existant").on("click", function(){
+        $('#reset-existant').click()
+        $('#dateAnalyse-existant').attr('value','')
+        //
+        $("#edit-submit").css('display','none')
+        $("#title_modal-edit").css('display','none')
+        $("#existant-submit").css('display','block')
+        $("#title_modal-existant").css('display','block')
+        
+    })
+    
+    //
+    $('.pdf-upload').each(function(){
+        $(this).click(function(){
+            $("#reset-pdf").click()
+            pdf_id = $(this).attr('id').split('-')[1]
+            $('#pdf-id_change').attr('value',pdf_id)
+        })
+    })
+</script>

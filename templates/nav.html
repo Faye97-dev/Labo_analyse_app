@@ -1,0 +1,149 @@
+{%load static%}
+<div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--light">
+    <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0">
+        <!-- Dashboards -->
+        {% if role == 'Admin' %}
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item">
+        <a class="my-menu-item media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" id="dashboard" href="#">
+            <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
+                <i class="fas fa-chart-line"></i>
+            </span>
+            <span class="media-body align-self-center">Dashboard</span>
+            <span class="d-flex align-self-center u-side-nav--control-icon">
+                <i class="hs-admin-angle-right"></i>
+            </span>
+            <span class="u-side-nav--has-sub-menu__indicator"></span>
+        </a>
+        </li>
+        {% endif %}
+        <!-- End Dashboards -->
+
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item">
+            <a class="my-menu-item media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" id="analyse" href="#">
+                <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
+                    <i class="fas fa-stethoscope"></i>
+                </span>
+                <span class="media-body align-self-center">Analyses</span>
+                <span class="d-flex align-self-center u-side-nav--control-icon">
+                    <i class="hs-admin-angle-right"></i>
+                </span>
+                <span class="u-side-nav--has-sub-menu__indicator"></span>
+            </a>
+        </li>
+
+        
+
+        <!-- App Views -->
+       
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#subMenu4">
+                <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
+                <i class="fas fa-briefcase"></i>
+                </span>
+                    <span class="media-body align-self-center">Operations</span>
+                    <span class="d-flex align-self-center u-side-nav--control-icon">
+                <i class="hs-admin-angle-right"></i>
+                </span>
+
+                <span class="u-side-nav--has-sub-menu__indicator"></span>
+            </a>
+
+            <!-- App Views: Submenu-1 -->
+            <ul id="subMenu4" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0">
+
+                <!-- Projects -->
+                {% if role == 'Admin' %}
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                <a class="my-menu-item media u-side-nav--second-level-menu-link g-px-15 g-py-12" id="view_send_analyse" href="#">
+                    <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
+                        <i class="fas fa-share-square"></i>
+                    </span>
+                    <span class="media-body align-self-center">Envoie d'analyse</span>
+                </a>
+                </li>
+                {% endif %}
+                <!-- End Projects -->
+
+                <!-- Chat -->
+                
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                <a class="my-menu-item media u-side-nav--second-level-menu-link g-px-15 g-py-12" id="view_chat_app" href='#'>
+                    <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
+                        <i class="fas fa-comments"></i>
+                    </span>
+                    <span class="media-body align-self-center">Messagerie</span>
+                </a>
+                </li>
+                
+                <!-- End Chat -->
+
+            </ul>
+        <!-- End App Views: Submenu-1 -->
+        </li>
+       
+        <!-- End App Views -->
+
+        <!-- Forms -->
+        {% if role == 'Admin' or role == 'Doctor' %}
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#subMenu5">
+                <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
+                <i class="fas fa-cog"></i>
+                </span>
+                        <span class="media-body align-self-center">Gestion des comptes</span>
+                        <span class="d-flex align-self-center u-side-nav--control-icon">
+                <i class="hs-admin-angle-right"></i>
+                </span>
+
+                <span class="u-side-nav--has-sub-menu__indicator"></span>
+            </a>
+
+            <!-- App Views: Submenu-1 -->
+            <ul id="subMenu5" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0">
+
+                <!-- Projects -->
+                
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                <a class="my-menu-item media u-side-nav--second-level-menu-link g-px-15 g-py-12" id="compte_patient" href="#">
+                    <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
+                        <i class="fas fa-user-injured"></i>
+                    </span>
+                    <span class="media-body align-self-center">Compte Patient</span>
+                </a>
+                </li>
+                
+                <!-- End Projects -->
+
+                <!-- Chat -->
+                {% if role == 'Admin' %}
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                    <a class="my-menu-item media u-side-nav--second-level-menu-link g-px-15 g-py-12" id="compte_medecin" href='#'>
+                        <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
+                            <i class="fas fa-user-md"></i>
+                        </span>
+                        <span class="media-body align-self-center">Compte Medecin</span>
+                    </a>
+                </li>
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                    <a class="my-menu-item media u-side-nav--second-level-menu-link g-px-15 g-py-12" id="compte_admin" href='#'>
+                        <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
+                            <i class="fas fa-user-tie"></i>
+                        </span>
+                        <span class="media-body align-self-center">Compte Admin</span>
+                    </a>
+                </li>
+                {% endif %}
+                <!-- End Chat -->
+
+                
+
+            </ul>
+        <!-- End App Views: Submenu-1 -->
+        </li>
+        {% endif %}
+        <!-- End Forms -->
+
+        
+
+    </ul>
+</div>

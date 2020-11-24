@@ -1,0 +1,157 @@
+{% csrf_token %}
+<div class="g-bg-lightblue-v10-opacity-0_5 g-pa-20">
+    <div class="row"> 
+        <div class="col-xl-12">
+            <!-- Income Cards -->
+            <div class="card g-brd-gray-light-v7 u-card-v1 g-mb-30">
+                <header class="media g-pa-15 g-pa-25-30-0--md g-mb-20">
+                    <div class="media-body align-self-center">
+                        <h3 class="g-line-height-1 g-font-weight-300 g-font-size-28 g-color-secondary">Envoie des analyses 
+                            <i class="fas fa-share-square"></i>  
+                        </h3>
+                    </div>
+                </header>
+            </div>
+            <div class="card g-brd-gray-light-v7 u-card-v1 g-pa-30 g-py-15 g-pa-0-30-25--md">
+                <br><br>
+                <div class="form-group row g-mb-25">
+                    <label class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-2 col-form-label g-font-size-18">Patients<i class="fas fa-user-injured g-px-10"></i></label>
+                    <div class="col-12 col-sm-5 col-md-6 col-lg-6 col-xl-7">
+                        <select class="custom-select rounded-0 g-brd-gray-light-v7 g-brd-secondary--focus g-px-6 g-py-5" id='option_patients'>
+                            <option value="" id='optionDefaut' disabled selected></option>
+                            {% for s in analyses %}
+                                <option value="{{s.id}}" id='optionPatient-{{s.id}}' class='optionPatient-class'>{{s.patient.nom}} - {{s.patient.tel}} ({{s.date_analyse}})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class='col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 g-py-5'>
+                        <a class="hs-admin-plus u-link-v5 g-font-size-24 g-color-gray-dark-v3 g-color-secondary--hover" href="#" id='add'></a>     
+                        <a class="hs-admin-reload u-link-v5 g-font-size-24 g-color-gray-dark-v3 g-color-primary--hover g-ml-25" href="#" id='reset'></a> 
+                        <a class="hs-admin-share u-link-v5 g-font-size-24 g-color-gray-dark-v3 g-color-secondary--hover g-ml-25" href="#" id='send'></a>    
+                    </div>
+                </div>
+                
+                <div>
+                    <table class="table table-responsive-sm w-100" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                                <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                                <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                                <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                                <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                            </tr>
+                        </thead>
+                        <tbody id='table-body'>
+
+                            <tr id='next-line'>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <div id='whatsapp-div'>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var analyse_id=''
+    $("#add").on("click", function(){
+        analyse_id = $('#option_patients option:selected').val()
+        var line;
+        if (analyse_id !== ''){
+            $("#whatsapp-div").html("")
+            $.get("json_patient/"+analyse_id,function(data){
+                //console.log(data)
+                analyse_json = data[0]
+                patient_json = data[1]
+                line =`<td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                    ${patient_json['nom']}
+                </td>
+                <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                    ${patient_json['tel']}
+                </td>
+                <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                    ${analyse_json['date_analyse']}
+                </td>
+                <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                    <a href='/media/${analyse_json['analyse_pdf']}' class="hs-admin-file g-font-size-20 g-ml-15" target='blank'></a>
+                </td>
+                <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                    <a class="hs-admin-trash u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-primary--hover remove-patient" href="#" id='remove-${analyse_json['id']}'></a>
+                </td>`	
+                // 
+                $("#next-line").html(line)
+                $("#next-line").addClass('line-analyse_to_send')
+                $("#next-line").attr("id",'line-'+analyse_json['id'])   
+            }).done(function() { 
+                console.log('added ...')
+                $('#optionDefaut').prop('selected',true)
+                $("#optionPatient-"+analyse_id).css("display",'none') 
+                $("#table-body").append("<tr id='next-line'></tr>")
+                
+                // remove a patient
+                $('.remove-patient').each(function(){
+                    $(this).on("click", function(){
+                        analyse_id = $(this).attr('id').split('-')[1]
+                        $("#line-"+analyse_id).remove()
+                        $("#optionPatient-"+analyse_id).css("display",'block')
+                        console.log('removed ...')
+                    })
+                })
+                
+                analyse_id= ''
+            }).fail(function() { 
+                console.log('failed')
+            }) 
+        }             
+    })
+
+    $("#reset").on("click", function(){
+        $("#table-body").html("<tr id='next-line'></tr>")
+        $(".optionPatient-class").css("display",'block') 
+        $("#whatsapp-div").html("")
+        console.log('reset ...')
+    })
+
+    // send analyse 
+    $("#send").on("click", function(){
+        myjson ={}
+        var data = []
+        $('.line-analyse_to_send').each(function(){
+            //console.log($(this).attr('id').split('-')[1]," hello ")
+            line_id = $(this).attr('id').split('-')[1]
+            data.push(line_id) 
+            
+        })
+        
+        url = window.location.href
+        if (url.indexOf("#") > -1){
+            url = url.replace('#', '')
+        }
+        myjson['link']= url
+        myjson['data']= data
+        //console.log(myjson)
+
+        //
+        if (data.length !== 0){
+            $("#table-body").html("<tr id='next-line'></tr>")
+            $(".optionPatient-class").css("display",'block') 
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('send_analyse',"whatsapp-div","POST",'data=' + JSON.stringify(myjson), csrftoken)
+        }else{
+            alert('Selectionner une analyse !!')
+        }
+        
+    })
+
+
+    /*
+    */
+
+    
+</script>

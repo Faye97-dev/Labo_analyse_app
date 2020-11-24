@@ -1,0 +1,57 @@
+<div class="container g-pt-100 g-pb-20">
+    <div class="row justify-content-between">
+        <div class="col-md-3 col-lg-3">
+        </div>
+        <div class="col-md-6 col-lg-6 flex-md-unordered align-self-center g-mb-80">
+        <div class="g-bg-white rounded g-pa-50 g-bg-gray-light-v12" style='display:none'>
+            <header class="text-center mb-4">
+            <h2 class="h2 g-color-black g-font-weight-600">S'authentifier</h2>
+            </header>
+
+            <!-- Form -->
+            <form class="g-py-15" method="post" action="{% url 'login:login_link' %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                <div class="input-group g-brd-primary--focus">
+                <div class="input-group-prepend">
+                    <span class="input-group-text g-width-45 g-brd-right-none g-brd-gray-light-v4 g-color-gray-dark-v5"><i class="icon-finance-067 u-line-icon-pro"></i></span>
+                </div>
+                <input class="form-control g-color-black g-bg-white g-brd-gray-light-v4 g-py-15 g-px-15" name='username' type="text" placeholder="">
+                </div>
+            </div>
+
+            <div class="g-mb-35">
+                <div class="input-group g-brd-primary--focus mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text g-width-45 g-brd-right-none g-brd-gray-light-v4 g-color-gray-dark-v5"><i class="icon-media-094 u-line-icon-pro"></i></span>
+                </div>
+                <input class="form-control g-color-black g-bg-white g-brd-gray-light-v4 g-py-15 g-px-15" name='password' type="password" placeholder="">
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <button class="btn btn-md btn-block u-btn-primary g-py-13" type="submit" id='login-btn'>Login</button>
+            </div>
+
+            
+            <!-- End Form Social Icons -->
+            </form>
+            <!-- End Form -->
+
+            <footer class="text-center">
+            <p class="g-color-gray-dark-v1 g-font-size-13 mb-0">
+                Copyright &copy;
+                <a href='https://www.digitransform.mr/' class='g-font-weight-600' target="_blank" > digiTransform 2020</a>
+            </p>
+            </footer>
+        </div>
+        </div>
+        <div class="col-md-3 col-lg-3">
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('#login-btn').click()
+</script>

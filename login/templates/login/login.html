@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Title -->
+  <title>Login</title>
+
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <!-- Favicon -->
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+  <!-- CSS Global Compulsory -->
+  
+  {% include 'css.html'%}
+  
+  <!-- CSS Unify 
+  <link rel="stylesheet" href="../../assets/css/unify-core.css">
+  <link rel="stylesheet" href="../../assets/css/unify-components.css">
+  <link rel="stylesheet" href="../../assets/css/unify-globals.css">
+  <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/dzsparallaxer.css">
+  <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/dzsscroller/scroller.css">
+  <link rel="stylesheet" href="../../assets/vendor/dzsparallaxer/advancedscroller/plugin.css">
+  <link rel="stylesheet" href="../../assets/vendor/plyr/dist/plyr.css">
+  <link rel="stylesheet" href="../../assets/vendor/hs-bg-video/hs-bg-video.css">
+  <link rel="stylesheet" href="../../assets/vendor/hs-megamenu/src/hs.megamenu.css">
+  <link rel="stylesheet" href="../../assets/vendor/hamburgers/hamburgers.min.css">
+
+  -->
+  
+</head>
+
+<body>
+  <main>
+    <!-- Login -->
+    <section>
+      <!-- Promo Block - Parallax Video 
+      
+        <div class="u-bg-overlay g-bg-size-cover g-bg-primary-gradient-opacity-v1--after"></div>
+     
+      -->
+      <div class="container g-pt-100 g-pb-20">
+        <div class="row justify-content-between">
+          
+          <div class="col-md-3 col-lg-3">
+          </div>
+          <div class="col-md-6 col-lg-6 flex-md-unordered align-self-center g-mb-80">
+            <div class="g-bg-white rounded g-pa-50 g-bg-gray-light-v12">
+              <header class="text-center mb-4">
+                <h2 class="h2 g-color-black g-font-weight-600">S'authentifier</h2>
+              </header>
+
+              <!-- Form -->
+              <form class="g-py-15" method="post" action="{% url 'login:login_link' %}">
+              {% csrf_token %}
+                <div class="mb-4">
+                  <div class="input-group g-brd-primary--focus">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text g-width-45 g-brd-right-none g-brd-gray-light-v4 g-color-gray-dark-v5"><i class="icon-finance-067 u-line-icon-pro"></i></span>
+                    </div>
+                    <input class="form-control g-color-black g-bg-white g-brd-gray-light-v4 g-py-15 g-px-15" name='username' type="text" placeholder="">
+                  </div>
+                </div>
+
+                <div class="g-mb-35">
+                  <div class="input-group g-brd-primary--focus mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text g-width-45 g-brd-right-none g-brd-gray-light-v4 g-color-gray-dark-v5"><i class="icon-media-094 u-line-icon-pro"></i></span>
+                    </div>
+                    <input class="form-control g-color-black g-bg-white g-brd-gray-light-v4 g-py-15 g-px-15" name='password' type="password" placeholder="">
+                  </div>
+                  <!--
+                    <div class="row justify-content-between">
+                      <div class="col align-self-center">
+                        <label class="form-check-inline u-check g-color-gray-dark-v5 g-font-size-12 g-pl-25 mb-0">
+                          <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox">
+                          <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
+                            <i class="fa g-rounded-2" data-check-icon="&#xf00c"></i>
+                          </div>
+                          Keep signed in
+                        </label>
+                      </div>
+                      <div class="col align-self-center text-right">
+                        <a class="g-font-size-12" href="#">Forgot password?</a>
+                      </div>
+                    </div>
+                  -->
+                </div>
+
+                <div class="mb-5">
+                  <button class="btn btn-md btn-block u-btn-primary g-py-13" type="submit">Login</button>
+                </div>
+
+                
+                <!-- End Form Social Icons -->
+              </form>
+              <!-- End Form -->
+
+              <footer class="text-center">
+                <p class="g-color-gray-dark-v1 g-font-size-13 mb-0">
+                    Copyright &copy;
+                    <a href='https://www.digitransform.mr/' class='g-font-weight-600' target="_blank" > digiTransform 2020</a>
+                </p>
+              </footer>
+            </div>
+          </div>
+          <div class="col-md-3 col-lg-3">
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- End Login -->
+  </main>
+
+</body>
+
+</html>

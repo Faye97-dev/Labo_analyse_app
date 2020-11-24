@@ -1,0 +1,284 @@
+<!-- Chat. Message Area. Header. -->
+{% load static %}
+{% csrf_token %}
+
+
+<header class="g-px-15 g-px-25--lg">
+<div class="media g-height-50 g-height-80--lg">
+    <div class="d-flex align-self-center g-width-100--sm g-line-height-1_2 g-font-size-default g-pos-rel">
+    <!-- Chat. Message Area. Search -->
+    <a href="#" class="u-link-v5 g-font-size-16 g-color-gray-light-v6 g-color-secondary--hover g-mr-15--sm" aria-haspopup="true" aria-expanded="false" aria-controls="chat-searchform-1" data-dropdown-target="#chat-searchform-1" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeInUp" data-dropdown-animation-out="fadeOutDown">
+       
+    </a>
+
+    <!-- Chat. Message Area. Search Form -->
+    <form id="chat-searchform-1" class="u-searchform-v1--align-left u-dropdown--css-animation u-dropdown--hidden g-box-shadow-none g-mt-5" style="animation-duration: 300ms; left: -15px;">
+        <div class="input-group g-pos-rel g-max-width-380">
+        </div>
+    </form>
+    <!-- End Chat. Message Area. Search Form -->
+    <!-- End Chat. Message Area. Search -->
+
+    <a class="g-color-gray-dark-v6 g-hidden-sm-down" href="#"></a>
+    </div>
+    
+
+    <div class="media-body d-flex align-self-center justify-content-center g-font-size-16--md g-color-black">
+        <a class="g-color-black" href="#">
+            {% if chat.user_to.user.username != username %}
+                {{chat.user_to.user.first_name}} - {{chat.user_to.description}}
+            {% else %}
+                {{chat.user_from.user.first_name}} - {{chat.user_from.description}}
+            {% endif %}
+        </a>
+    </div>
+
+    <div class="d-flex align-self-center align-items-center justify-content-end g-width-100--sm">
+        <a class="u-link-v5 g-line-height-1 g-font-size-20 g-color-gray-light-v6 g-color-secondary--hover" href="#">
+        </a>
+
+        <div class="g-pos-rel g-z-index-2 g-line-height-1 g-ml-10 g-ml-20--lg">
+            <a id="dropDown1Invoker" class="u-link-v5 g-line-height-0 g-font-size-24 g-color-gray-light-v6 g-color-secondary--hover" href="#" aria-controls="dropDown1" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#dropDown1" data-dropdown-type="jquery-slide">
+            </a>
+        </div>
+
+    </div>
+</div>
+</header>
+
+
+<!-- End Chat. Message Area. Header. -->
+
+<hr class="d-flex g-brd-gray-light-v7 g-mx-15 g-mx-25--lg my-0">
+
+<!-- Chat. Message Area. Messages. -->
+<div class="js-custom-scroll g-height-50vh--lg g-pa-15 g-pa-25--lg" id='chat_msg_area'>
+    <!-- Chat. Message Area. Message (From). -->
+    {% for m in messages %}
+        {% if m.sender.user.username != username %}
+            <section class="g-mb-30 senderMsgClass" id='msg_id-{{m.id}}'>
+                <div class="media g-mb-12">
+                <!-- Chat. Message Area. Message. Avatar. -->
+                    <div class="d-flex align-self-end g-mr-12">
+                        <i class="far fa-user-circle fa-2x g-color-black g-px-10"></i>                    
+                        <!--
+                        <img class="rounded-circle g-width-36 g-height-36" src="{% static 'root/assets/img-temp/200x200/img2.jpg' %}" alt="Image Description">
+                        -->
+                    </div>
+                    <!-- End Chat. Message Area. Message. Avatar. -->
+
+                    <!-- Chat. Message Area. Message. Body. -->
+                    <div class="media-body">
+                        <div class="d-inline-block g-width-170 g-width-auto--sm g-bg-gray-light-v8 g-font-size-12 g-font-size-default--lg g-color-gray-dark-v6 g-rounded-10 g-pa-10-15">
+                        <p class="mb-0">{{m.content}}</p>
+                        </div>
+                    </div>
+                <!-- End Chat. Message Area. Message. Body. -->
+                </div>
+
+                <!-- Chat. Message Area. Message Time -->
+                <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 g-ml-50">
+                    <i class="hs-admin-time icon-clock g-mr-5"></i>
+                    <small>{{m.timestamp | date:"d.m.Y, H:i"}}</small>
+                </em>
+                <!-- End Chat. Message Area. Message Time -->
+            </section>
+        {% else %}
+            <section class="g-mb-30" id='msg_id-{{m.id}}'>
+                <div class="media g-mb-12">
+                <!-- Chat. Message Area. Message. Body. -->
+                    <div class="media-body d-flex align-self-end align-items-center justify-content-end" >
+                        <div class="d-inline-block g-width-170 g-width-auto--sm g-bg-lightblue-v6 g-font-size-12 g-font-size-default--lg g-color-gray-dark-v6 g-rounded-10 g-pa-10-15">
+                        <p class="mb-0">{{m.content}}</p>
+                        </div>
+                    </div>
+                    <!-- End Chat. Message Area. Message. Body. -->
+
+                    <!-- Chat. Message Area. Message. Avatar. -->
+                    <div class="d-flex align-self-end g-ml-12">
+                        <i class="far fa-user-circle fa-2x g-color-teal-v3 g-px-10"></i>  
+                    </div>
+                <!-- End Chat. Message Area. Message. Avatar. -->
+                </div>
+
+                <!-- Chat. Message Area. Message Time -->
+                <em class="d-flex align-self-end align-items-center justify-content-end g-font-style-normal g-color-gray-light-v1 g-mr-50">
+                    <i class="hs-admin-time icon-clock g-mr-5"></i>
+                    <small>{{m.timestamp | date:"d.m.Y, H:i"}}</small>
+                </em>
+                <!-- End Chat. Message Area. Message Time -->
+            </section>
+        {% endif %}
+    {% endfor %}
+    <section class="g-mb-30" id='next-new_msg-1'></section>
+    <section class="g-mb-30" id='next-new_msg-2'></section>
+    <section class="g-mb-30" id='next-new_msg-3'></section>
+    <section class="g-mb-30" id='next-new_msg-4'></section>
+    <section class="g-mb-30" id='next-new_msg-5'></section>
+    <section class="g-mb-30" id='next-new_msg-6'></section>
+    <section class="g-mb-30" id='next-new_msg-7'></section>
+    <section class="g-mb-30" id='next-new_msg-8'></section>
+    <section class="g-mb-30" id='next-new_msg-9'></section>
+    <!-- End Chat. Message Area. Message (From). -->
+
+    <!-- Chat. Message Area. Message (To). -->
+    
+    <!-- End Chat. Message Area. Message (To). 
+    <div class="text-center u-heading-v1-4 g-bg-main g-brd-lightblue-v3 g-mb-40">
+        <h2 class="u-heading-v1__title g-font-size-default g-font-weight-400 g-color-secondary g-px-20--md g-px-45--xl">4 New Messages</h2>
+    </div>
+    -->
+   
+</div>
+<!-- End Chat. Message Area. Messages. -->
+
+<footer class="g-bg-gray-light-v8 g-px-15 g-px-30--lg g-py-10 g-py-25--lg">
+    <form>
+        <div class="media align-items-top">
+            <div class="media-body g-ml-25">
+                <textarea class="form-control u-textarea-expandable g-resize-none g-bg-transparent g-brd-none w-100 p-0 g-mt-minus-3" placeholder="Envoyer un message ..." id='msg-input'></textarea>
+            </div>
+            <div class="d-flex ml-auto">
+                <button class="btn btn-link d-flex align-self-top align-items-top u-link-v5 g-color-secondary g-color-secondary--hover p-0 g-ml-15" type='button' id='btn-send-msg'>
+                    <i class="fas fa-paper-plane g-font-size-18 g-line-height-1_4"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</footer>
+
+
+<!-- JS Global Compulsory -->
+<script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/vendor/jquery-migrate/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'root/assets/vendor/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'root/assets/vendor/cookiejs/jquery.cookie.js' %}"></script>
+
+
+<!-- JS Plugins Init. -->
+<script src="{% static 'root/assets/vendor/appear.js' %}"></script>
+<script src="{% static 'root/assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+
+
+
+<!-- JS Unify -->
+<script src="{% static 'root/assets/js/hs.core.js' %}"></script>
+<!--<script src="{% static 'root/assets/js/components/hs.dropdown.js' %}"></script>-->
+<script src="{% static 'root/assets/js/components/hs.scrollbar.js' %}"></script>
+
+<script>
+    //var style = "<style>.center { display: block;margin-left: auto; margin-right: auto; }</style>"
+    //var spinner = style + "<img src='../static/img/spin.gif' border='0' class='spinner center'> ";
+    $("#messages-div").css('display','none');
+    $(document).on('ready', function () {
+        // initialization of custom scrollbar
+        $.HSCore.components.HSScrollBar.init($('.js-custom-scroll'));
+        $.HSCore.components.HSScrollBar.init($('.js-custom-scroll-horizontal'), {axis: 'x'});
+        $("#messages-div").css('display','block');
+        $("#chat_msg_area").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0})
+       
+       
+        // initialization of HSDropdown component
+        //$.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {dropdownHideOnScroll: false});
+        //$.HSCore.components.HSBarChart.init('.js-bar-chart');
+
+        /*
+        // initialization of hamburger
+        $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+        // initialization of custom select
+        $('.js-select').selectpicker();
+
+        // initialization of charts
+        */
+    });
+</script>
+
+<script>
+
+    //update last msg 
+    $('#chatLastMsg-'+{{chat.id}}).html('{{chat.last_message.id}}')
+    $('#contentLastMsg-'+{{chat.id}}).html('{{chat.last_message.content.strip}}')
+    $('#chatTimestamp-'+{{chat.id}}).html('{{lastMsg_time}}')
+        
+    var data_send = {}
+    var counter = 1
+    $("#btn-send-msg").on("click", function(){
+        msg = $("#msg-input").val()
+        //console.log(msg)
+        data_send['message'] = msg
+        data_send['chat_id'] = {{chat.id}}
+        if(msg !== "" ){
+            //console.log(data_send)
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            if(counter <=7){
+                var success_send = function (data) {
+                    newSectionMsg =  addMsg(data[0]['content'],data[1])
+                    $("#next-new_msg-"+counter).html(newSectionMsg)
+                    $("#next-new_msg-"+counter).attr('id' ,`msg_id-${data[0]['id']}`)
+                    counter = counter+1
+                    //$("#chat_msg_area").append(`<section class="g-mb-30" id='next-new_msg'></section>`)
+                    $("#chat_msg_area").mCustomScrollbar("scrollTo","bottom",{scrollInertia:0})
+                    //
+                    $('#chatLastMsg-'+{{chat.id}}).html(data[0]['id'])
+                    $('#contentLastMsg-'+{{chat.id}}).html(data[0]['content'])
+                    $('#chatTimestamp-'+{{chat.id}}).html(data[1])
+                    
+                    console.log('sucess' , data) 
+                }
+                ServiceBakend.ajax.SendData('add_message-json', data_send, csrftoken,success_send, function(reponse){console.log(' failed ....')})
+                
+                
+
+                $("#msg-input").val("")
+
+            }else{
+                ServiceBakend.ajax.SendData('add_message-json', data_send, csrftoken,function(reponse){console.log('reset the scroller ....')}, function(reponse){console.log(' failed ....')})
+                //$("#msg-input").val("")
+                GplFwk.ajax.getAjax('show_chat/'+data_send['chat_id'],"messages-div","GET")
+            }
+        }else{
+            console.log('empty message !!!')
+            
+        }
+        data_send = {}
+    })
+
+    var addMsg = function(content , time){
+        return `<div class="media g-mb-12">
+            <div class="media-body d-flex align-self-end align-items-center justify-content-end" >
+                <div class="d-inline-block g-width-170 g-width-auto--sm g-bg-lightblue-v6 g-font-size-12 g-font-size-default--lg g-color-gray-dark-v6 g-rounded-10 g-pa-10-15">
+                    <p class="mb-0">${content}</p>
+                </div>
+            </div>
+
+            <div class="d-flex align-self-end g-ml-12">
+               <i class="far fa-user-circle fa-2x g-color-teal-v3 g-px-10"></i> 
+            </div>
+            </div>
+            <em class="d-flex align-self-end align-items-center justify-content-end g-font-style-normal g-color-gray-light-v1 g-mr-50">
+                <i class="hs-admin-time icon-clock g-mr-5"></i>
+                <small>${time}</small>
+            </em>`
+    }
+
+    var addMsg_recived = function(content , time){
+        return `<div class="media g-mb-12">
+            <div class="d-flex align-self-end g-mr-12">
+                <i class="far fa-user-circle fa-2x g-color-black g-px-10"></i>
+            </div>
+            <div class="media-body">
+                <div class="d-inline-block g-width-170 g-width-auto--sm g-bg-gray-light-v8 g-font-size-12 g-font-size-default--lg g-color-gray-dark-v6 g-rounded-10 g-pa-10-15">
+                <p class="mb-0">${content}</p>
+                </div>
+            </div>
+            </div>
+            <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 g-ml-50">
+                <i class="hs-admin-time icon-clock g-mr-5"></i>
+                <small>${time}</small>
+            </em>`
+    }
+
+    
+</script>
+

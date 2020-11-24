@@ -1,0 +1,23 @@
+{%load static%}
+<div class="modal fade" id="rotate-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title text-uppercase g-font-size-default g-color-red g-mb-8" id="exampleModalLabel">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style='display:none'>×</span>
+                    </button>
+                </span>
+            </div>
+            <div class='modal-body'>
+                <div >
+                    <img src="{% static 'img/rotation.gif' %}"  border='0' width='200' style='display: block;margin-left: auto; margin-right: auto;' >
+                    <span class='d-flex align-self-center justify-content-center'> Tourner votre ecran Svp </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn u-btn-primary" id='rotate-dismiss' type="button" data-dismiss="modal" style='display:none'>Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>

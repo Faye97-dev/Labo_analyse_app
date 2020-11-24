@@ -1,0 +1,84 @@
+
+{% if total_success != 0 %}
+    <div class="noty_bar noty_type__success noty_theme__unify--v1--light g-mb-25">
+        <div class="noty_body">
+            <div class="g-mr-20">
+                <div class="noty_body__icon">
+                    <i class="hs-admin-check"></i>
+                </div>
+            </div>
+
+            <div class='g-color-secondary'>Total d'analyses envoyes avec succes {{total_success}} / {{total_send}}</div>
+        </div>
+        <table class="table table-responsive-sm w-100">
+            <thead>
+                <tr>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in success_sent %}
+                    <tr>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.patient.nom}}
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.patient.tel}}
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            <a href='/media/{{a.analyse_pdf}}' class="hs-admin-file g-font-size-20 g-ml-15" target='blank'></a>
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.date_analyse}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+
+{% if total_failed != 0 %}
+    <div class="noty_bar noty_type__error noty_theme__unify--v1--light g-mb-25">
+        <div class="noty_body">
+            <div class="g-mr-20">
+                <div class="noty_body__icon">
+                    <i class="hs-admin-alert"></i>
+                </div>
+            </div>
+
+            <div class='g-color-primary'>Total d'analyses non envoyes {{total_failed}} / {{total_send}}</div>
+        </div>
+        <table class="table table-responsive-sm w-100">
+            <thead>
+                <tr>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                    <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in failed_sent %}
+                    <tr>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.patient.nom}}
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.patient.tel}}
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            <a href='/media/{{a.analyse_pdf}}' class="hs-admin-file g-font-size-20 g-ml-15" target='blank'></a>
+                        </td>
+                        <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                            {{a.date_analyse}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+{% endif %}

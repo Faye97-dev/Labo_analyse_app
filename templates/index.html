@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" id='html-div'>
+
+<head>
+  <!-- Title -->
+  <title>Labo app</title>
+
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  {% include 'css.html'%}
+  
+</head>
+
+<body>
+  <!-- Header -->
+  {% include 'profil.html'%}
+  <!-- End Header -->
+
+
+  <main class="container-fluid px-0 g-pt-65">
+    <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
+      <!-- Sidebar Nav -->
+      {% include 'nav.html'%}
+      <!-- End Sidebar Nav -->
+
+      <!-- Main components -->
+      <div class="col g-ml-45 g-ml-0--lg g-pb-65--md" id='main-div'>
+       
+      </div>
+
+
+      <!-- Footer -->
+      {% include 'footer.html'%}
+    </div>
+  </main>
+
+ 
+  {% include 'script.html'%}
+
+  {% if role == 'Doctor' %}
+    <script>
+      $('#analyse').attr('id','analyse/medecin/{{with_account}}')
+      $('#compte_patient').attr('id','compte_patient/medecin/{{with_account}}')
+      // first link
+      $('#analyse\\/medecin\\/{{with_account}}').click()
+    </script>
+  {% elif role == 'Patient'  %}
+    <script>
+      $('#analyse').attr('id','analyse/patient/{{with_account}}')
+      // first link
+      $('#analyse\\/patient\\/{{with_account}}').click()
+    </script>
+  {% else %}
+    <script>
+      $('#{{first_link}}').click()
+    </script>
+  {% endif %}
+
+  
+  
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of custom select
+      $('.js-select').selectpicker();
+      // initialization of HSDropdown component
+      $.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {dropdownHideOnScroll: false});
+   
+      // initialization of hamburger
+      $.HSCore.helpers.HSHamburgers.init('.hamburger');
+  
+      // initialization of sidebar navigation component
+      $.HSCore.components.HSSideNav.init('.js-side-nav')
+      /*
+      $.HSCore.components.HSSideNav.init('.js-side-nav', {
+        afterOpen: function() {
+          setTimeout(function() {
+            $.HSCore.components.HSAreaChart.init('.js-area-chart');
+            $.HSCore.components.HSDonutChart.init('.js-donut-chart');
+            $.HSCore.components.HSBarChart.init('.js-bar-chart');
+          }, 400);
+        },
+        afterClose: function() {
+          setTimeout(function() {
+            $.HSCore.components.HSAreaChart.init('.js-area-chart');
+            $.HSCore.components.HSDonutChart.init('.js-donut-chart');
+            $.HSCore.components.HSBarChart.init('.js-bar-chart');
+          }, 400);
+        }
+      });*/
+  
+      // initialization of range datepicker
+      $.HSCore.components.HSRangeDatepicker.init('#rangeDatepicker, #rangeDatepicker2, #rangeDatepicker3');
+  
+      // initialization of datepicker
+      $.HSCore.components.HSDatepicker.init('#datepicker', {
+        dayNamesMin: [
+          'SU',
+          'MO',
+          'TU',
+          'WE',
+          'TH',
+          'FR',
+          'SA'
+        ]
+      });
+  
+      // initialization of popups
+      $.HSCore.components.HSPopup.init('.js-fancybox', {
+        btnTpl: {
+          smallBtn: '<button data-fancybox-close class="btn g-pos-abs g-top-25 g-right-30 g-line-height-1 g-bg-transparent g-font-size-16 g-color-gray-light-v3 g-brd-none p-0" title=""><i class="hs-admin-close"></i></button>'
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

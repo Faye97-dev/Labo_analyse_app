@@ -1,0 +1,231 @@
+{% load static %}
+{% csrf_token %}
+<div class="g-bg-lightblue-v10-opacity-0_5 g-pa-20">
+    <div class="row">
+        {% if role == 'Admin' %}
+        <div class="col-sm-6 col-lg-6 col-xl-4 g-mb-30">
+            <button class="btn btn-md btn-xl--md u-btn-secondary g-width-125--md g-font-size-12 g-font-size-default--md g-mb-10" id='bigbtn-add' data-target='#add-modal' data-toggle='modal'> Nouveau </button>      
+        </div>
+        {% endif %}
+        
+        <div class="col-xl-12">
+            <!-- Income Cards -->
+            <div class="card g-brd-gray-light-v7 u-card-v1 g-mb-30">
+                <header class="media g-pa-15 g-pa-25-30-0--md g-mb-20">
+                    <div class="media-body align-self-center">
+                        <h3 class="g-line-height-1 g-font-weight-300 g-font-size-28 g-color-secondary">Listes des patients <i class="fas fa-user-injured"></i></h3>
+                    </div>
+                </header>
+
+                <div class="js-custom-scroll g-height-500 g-pa-15 g-pa-0-30-25--md">
+                    <table class="table table-responsive-sm w-100" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Nom Complet</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Email </th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Numero </th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Age </th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Poids</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Taille</th>
+                            <th class="g-font-weight-300 g-color-gray-dark-v6 g-brd-top-none">Actions</th>
+                            <th style="display:none"></th>
+                            <th style="display:none"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for a in patients %}
+                        <tr>
+                            <td id='nom-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.nom}}
+                            </td>
+                            <td id='email-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.email}}
+                            </td>
+                            <td id='tel-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.tel}}
+                            </td>
+                            <td id='age-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.age}}
+                            </td>
+                            <td id='poids-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.poids}}
+                            </td>
+                            <td id='taille-{{a.id}}' class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {{a.taille}}
+                            </td>
+                            <td class="g-font-size-default g-color-black g-valign-middle g-brd-top-none g-brd-bottom g-brd-2 g-brd-gray-light-v4 g-py-10">
+                                {% if role == 'Admin' %}
+                                    <a class="hs-admin-pencil u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-secondary--hover g-ml-5 edit-patient" href="#" id='edit-{{a.id}}' data-target='#add-modal' data-toggle='modal'></a>
+                                    <a class="hs-admin-trash u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-primary--hover g-ml-5 delete-patient" href="#" id='delete-{{a.id}}' data-target='#delete-modal' data-toggle='modal'></a>
+                                {% else %}
+                                    <a class="hs-admin-eye u-link-v5 g-font-size-20 g-color-gray-dark-v3 g-color-secondary--hover g-ml-5 edit-patient" href="#" id='edit-{{a.id}}' data-target='#add-modal' data-toggle='modal'></a>
+                                {% endif %}
+                            </td>
+
+                            <td id='nni-{{a.id}}' style="display:none">{{a.nni}}</td>
+                            <td id='adresse-{{a.id}}' style="display:none">{{a.adresse}}</td>
+                            <td id='grpSanguin-{{a.id}}' style="display:none">{{a.group_sanguin.id}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- End Income Cards -->
+        </div>
+    </div>  
+</div>
+
+
+{% include 'analyse/add_patient-modal.html' %}
+{% include 'analyse/delete_patient-modal.html' %}
+
+
+<script src="{% static 'root/assets/js/components/hs.scrollbar.js' %}"></script>
+<script>
+    // initialization of custom scrollbar
+    $.HSCore.components.HSScrollBar.init($('.js-custom-scroll'));
+    // initialization of HSDropdown component
+    $.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {dropdownHideOnScroll: false});
+    var transformFormDatafunction = function (a) {
+        var data = {}
+
+        for (var i = 0; i < a.length; i++) {          
+            data[a[i].name] = a[i].value
+        }
+        
+        return data;
+    }
+
+    var data_add;
+    var isSubmited_add = false;
+    $("#add-submit").on("click", function(){
+        //$('#'+position_id).prop('selected',false);
+        form = $("#form_add-patient").serializeArray()
+        data_add =transformFormDatafunction(form)
+        //console.log(form)
+        data_add['grpSanguin_id']=$('#option_grpSanguin option:selected').val()
+        if(data_add['name_nni']!=="" && data_add['name_nom']!=="" && data_add['name_tel']!=="" &&  data_add['grpSanguin_id']!=="" ){
+            console.log(data_add)
+            isSubmited_add = true
+            $("#add-dismiss").click()
+        }else{
+            alert('Des champs non renseignes !!')
+        }         
+    })
+
+    $("#add-modal").on("hidden.bs.modal", function(){
+        $(".modal-backdrop").remove(); 
+        if(isSubmited_add){
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('add_patient',"main-div","POST",'data=' + JSON.stringify(data_add), csrftoken)
+            data_add={}
+            isSubmited_add = false
+        }else if(isSubmited_edit){
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+            GplFwk.ajax.getAjax('edit_patient',"main-div","POST",'data=' + JSON.stringify(data_edit), csrftoken)
+            data_edit={}
+            isSubmited_edit = false
+        }
+        
+        $('#reset-add').click()
+        $('#nom-patient').attr('value',"")
+        $('#tel-patient').attr('value',"")
+        $('#adresse-patient').attr('value',"")
+        $('#nni-patient').attr('value',"")
+        $('#email-patient').attr('value',"")
+        $('#poids-patient').attr('value',"")
+        $('#age-patient').attr('value',"")
+        $('#taille-patient').attr('value',"")
+        $('#username-patient').attr('value',"")
+    })
+
+    $("#bigbtn-add").on("click", function(){
+        $("#edit-submit").css('display','none')
+        $("#title_modal-edit").css('display','none')
+        //$("#input_div-username").css('display','none')
+        $("#title_modal-add").css('display','block')
+        $("#add-submit").css('display','block')
+    })
+
+    //
+    var id_patient
+    $('.edit-patient').each(function(){
+        $(this).click(function(){
+            $('#reset-add').click()
+            id_patient = $(this).attr('id').split('-')[1]
+            //console.log(id_patient)
+            $('#nom-patient').attr('value',$('#nom-'+id_patient).text().trim())
+            $('#tel-patient').attr('value',$('#tel-'+id_patient).text().trim())
+            $('#adresse-patient').attr('value',$('#adresse-'+id_patient).text().trim())
+            $('#nni-patient').attr('value',$('#nni-'+id_patient).text().trim())
+            $('#email-patient').attr('value',$('#email-'+id_patient).text().trim())
+            $('#poids-patient').attr('value',$('#poids-'+id_patient).text().trim())
+            $('#age-patient').attr('value',$('#age-'+id_patient).text().trim())
+            $('#taille-patient').attr('value',$('#taille-'+id_patient).text().trim())
+            
+            id_grpSanguin = $('#grpSanguin-'+id_patient).text().trim()
+            $('#optionSanguin-'+id_grpSanguin).prop('selected',true)
+            
+            //
+            $("#edit-submit").css('display','block')
+            $("#title_modal-edit").css('display','block')
+            $("#title_modal-add").css('display','none')
+            $("#add-submit").css('display','none')  
+
+            $.get("json_patientUser/"+id_patient,function(data){
+                $('#username-patient').attr('value',data['username'])	     
+            }).done(function() { 
+                //$('#prop-spinner').css("display", "none")
+                //$('#form-proprietaire').css("display", "block")
+                console.log('sucess')
+            })
+            .fail(function() { 
+                //$('#prop-spinner').css("display", "none") 
+                //$('#prop-alert').css("display", "block")
+                console.log('failed')
+            })           
+        })
+    })
+
+    var data_edit;
+    var isSubmited_edit = false;
+    $("#edit-submit").on("click", function(){
+        form = $("#form_add-patient").serializeArray()
+        //console.log(form)
+        data_edit =transformFormDatafunction(form)
+        
+        // select options
+        data_edit['patient_id']= id_patient
+        data_edit['grpSanguin_id']=$('#option_grpSanguin option:selected').val()
+        if(data_edit['name_nni']!== "" && data_edit['name_nom']!=="" && data_edit['name_tel']!=="" && data_edit['grpSanguin_id']!=="" ){
+            console.log(data_edit)
+            isSubmited_edit = true
+            $("#add-dismiss").click()
+        }else{
+            alert('Des champs non renseignes !!')
+        }    
+    })
+
+    // delete script
+    $('.delete-patient').each(function(){
+        $(this).click(function(){
+            id_patient = $(this).attr('id').split('-')[1]
+        })
+    })
+    
+    var isSubmited_delete = false
+    $("#delete-submit").on("click", function(){
+        isSubmited_delete = true
+        $("#delete-dismiss").click()
+    })
+
+    $("#delete-modal").on("hidden.bs.modal", function(){
+        $(".modal-backdrop").remove(); 
+        if(isSubmited_delete){
+            GplFwk.ajax.getAjax('delete_patient/'+id_patient,"main-div","GET")
+            isSubmited_delete = false
+        }
+    })
+</script>

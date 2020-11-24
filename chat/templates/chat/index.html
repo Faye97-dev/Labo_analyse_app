@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+    What chat room would you like to enter?<br>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter">
+
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = '/chat/' + roomName + '/';
+        };
+    </script>
+</body>
+</html>
+
+<!-- Chat List 
+<div class="d-flex d-lg-block g-brd-bottom g-brd-none--lg g-brd-gray-light-v4 g-overflow-x-auto">
+     Chat List Item: typing 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-teal-v2 g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img2.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">O<span class="g-hidden-md-down">live&nbsp;</span><span class="g-hidden-md-up">.</span>Wise</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>11:49 PM</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <div class="d-flex align-self-center g-mr-15">
+            
+        </div>
+        <p class="media-body align-self-center mb-0">Typing…</p>
+
+         Chat List Item: Unread Messages 
+        <div class="d-flex align-self-center justify-content-center g-min-width-35 g-bg-secondary g-font-size-12 g-color-white g-rounded-15 g-px-8 g-py-1 ml-auto">5</div>
+         End Chat List Item: Unread Messages 
+        </div>
+    </div>
+    </section>
+     End Chat List Item: typing 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img2.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">E<span class="g-hidden-md-down">dith&nbsp;</span><span class="g-hidden-md-up">.</span>Garza</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>08:33 PM</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Finding the perfect learning for Flash</p>
+
+         Chat List Item: Unread Messages 
+        <div class="d-flex align-self-center justify-content-center g-min-width-35 g-bg-secondary g-font-size-12 g-color-white g-rounded-15 g-px-8 g-py-1 ml-auto">1</div>
+         End Chat List Item: Unread Messages 
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="active media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img1.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">I<span class="g-hidden-md-down">saac&nbsp;</span><span class="g-hidden-md-up">.</span>McDonald</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>07:12 PM</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Computer users and programmers</p>
+
+         Chat List Item: Unread Messages 
+        <div class="d-flex align-self-center justify-content-center g-min-width-35 g-bg-secondary g-font-size-12 g-color-white g-rounded-15 g-px-8 g-py-1 ml-auto">4</div>
+         End Chat List Item: Unread Messages 
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-teal-v2 g-mb-8 g-mr-8"></span>
+
+        <div class="rounded-circle g-pos-rel g-width-45 g-width-55--lg g-height-45 g-height-55--lg g-bg-gray-light-v7">
+        <span class="text-uppercase g-absolute-centered g-font-weight-600 g-font-size-16 g-font-size-18--lg g-color-white">SA</span>
+        </div>
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">S<span class="g-hidden-md-down">hane&nbsp;</span><span class="g-hidden-md-up">.</span>Andrews</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>07:05 PM</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Having a baby can be a nerve wracking</p>
+
+         Chat List Item: Unread Messages 
+        <div class="d-flex align-self-center justify-content-center g-min-width-35 g-bg-secondary g-font-size-12 g-color-white g-rounded-15 g-px-8 g-py-1 ml-auto">2</div>
+         End Chat List Item: Unread Messages 
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img5.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">G<span class="g-hidden-md-down">ene&nbsp;</span><span class="g-hidden-md-up">.</span>Lambert</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>Monday</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Can you imagine what we will</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img2.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">S<span class="g-hidden-md-down">ally&nbsp;</span><span class="g-hidden-md-up">.</span>Flowers</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>Sunday</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">HDMI, or high definition multimedia</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img3.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">I<span class="g-hidden-md-down">sabella&nbsp;</span><span class="g-hidden-md-up">.</span>Wilkins</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>Saturday</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Are you one of the thousands of Iphone</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-lightyellow g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img2.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">E<span class="g-hidden-md-down">lizabeth&nbsp;</span><span class="g-hidden-md-up">.</span>French</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>22/11/20017</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">With MySpace becoming more popular</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-primary g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img4.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">A<span class="g-hidden-md-down">drian&nbsp;</span><span class="g-hidden-md-up">.</span>Cruz</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>31/10/20017</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Do you know what could beat the exciting</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+
+     Chat List Item 
+    <section class="media justify-content-center g-bg-gray-light-v8--active g-brd-bottom--lg g-brd-gray-light-v4 g-pa-15 g-pa-25--lg">
+     Chat List Item: Avatar 
+    <div class="d-flex g-mr-20--lg">
+        <span class="d-inline-block g-pos-rel">
+        <span class="u-badge-v2--md u-badge--bottom-right g-bg-teal-v2 g-mb-8 g-mr-8"></span>
+        <img class="rounded-circle g-width-45 g-width-55--lg g-height-45 g-height-55--lg" src="{% static 'root/assets/img-temp/200x200/img7.jpg' %}" alt="Image Description">
+        </span>
+    </div>
+     End Chat List Item: Avatar 
+
+    <div class="media-body align-self-center g-hidden-md-down">
+        <div class="media g-mb-10">
+         Chat List Item: Name 
+        <h3 class="d-flex align-self-center g-font-size-16 g-font-weight-400 mb-0">A<span class="g-hidden-md-down">ustin&nbsp;</span><span class="g-hidden-md-up">.</span>Norris</h3>
+         End Chat List Item: Name 
+
+         Chat List Item: Time 
+        <em class="d-flex align-self-center align-items-center g-font-style-normal g-color-gray-light-v1 ml-auto">
+        <i class="hs-admin-time icon-clock g-mr-5"></i>
+        <small>13/10/20017</small>
+        </em>
+         End Chat List Item: Time 
+        </div>
+
+        <div class="media">
+        <p class="media-body mb-0">Having a baby can be a nerve wracking</p>
+        </div>
+    </div>
+    </section>
+     End Chat List Item 
+</div>
+ End Chat List -->
